@@ -52,6 +52,8 @@ model User {
   sub            Subscription?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+  apiTokens      ApiToken[]
+  links          Link[]
 }
 
 model Account {
@@ -144,4 +146,54 @@ model PaymentHistory {
   userId                  String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
+}
+
+model Link {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  originalUrl String
+  isActive    Boolean        @default(true)
+  analytics   LinkAnalytic[]
+  user        User           @relation(fields: [userId], references: [id])
+  userId      String
+  metadata    Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model LinkAnalytic {
+  id           String      @id @default(cuid())
+  date         DateTime    @unique
+  clicks       Int         @default(0)
+  uniqueClicks Int         @default(0)
+  trackInfos   TrackInfo[]
+  link         Link        @relation(fields: [linkId], references: [id])
+  linkId       String
+  metadata     Json? // { uniqueIps: [] }
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model TrackInfo {
+  id             String        @id @default(cuid())
+  referrer       String        @db.Text
+  ipAddress      String
+  deviceType     String        @db.Text
+  os             String        @db.Text
+  browser        String        @db.Text
+  geo            Json
+  linkAnalytic   LinkAnalytic? @relation(fields: [linkAnalyticId], references: [id])
+  linkAnalyticId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model ApiToken {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

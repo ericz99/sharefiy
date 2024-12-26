@@ -1,0 +1,22 @@
+MVP Features
+Custom Shortened Links:
+
+Allow users to generate branded short links.
+Example: mybrand.link/summer-sale.
+Basic Analytics:
+
+Total clicks.
+Referrer source (e.g., Google, Facebook, email).
+Device type (desktop, mobile, tablet).
+Geo-location of users.
+User Dashboard:
+
+List of all active links.
+Click trends for individual links.
+Traffic breakdown (pie charts for referrers).
+UTM Parameters Support:
+
+Ability to append UTM parameters to links easily.
+Real-Time Updates (Optional):
+
+Reflect clicks and sources instantly in the dashboard.

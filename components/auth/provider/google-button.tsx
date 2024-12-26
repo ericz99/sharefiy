@@ -12,7 +12,7 @@ export default function GoogleButton({ signIn }: ProviderProps) {
       className="flex-1"
       action={async () => {
         await signIn("google", {
-          redirectTo: "/app/dashboard",
+          redirectTo: "/app/links",
         });
       }}
     >

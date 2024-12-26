@@ -5,13 +5,7 @@ import * as React from "react";
 import { type SignOut } from "@/auth";
 import { type User } from "next-auth";
 
-import {
-  Command,
-  StickyNote,
-  Images,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { Command, ChartArea, Link } from "lucide-react";
 
 import { NavMain } from "@/components/sidebar/nav-main";
 
@@ -35,36 +29,31 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "/app/dashboard",
-      icon: SquareTerminal,
+      title: "Links",
+      url: "/app/links",
+      icon: Link,
     },
     {
-      title: "Posts",
-      url: "/app/posts",
-      icon: StickyNote,
+      title: "Analytics",
+      url: "/app/analytics",
+      icon: ChartArea,
     },
-    {
-      title: "Gallery",
-      url: "/app/gallery",
-      icon: Images,
-    },
-    {
-      title: "Settings",
-      isCollapsable: true,
-      isActive: true,
-      icon: Settings2,
-      items: [
-        {
-          title: "Profile",
-          url: "/app/settings/profile",
-        },
-        {
-          title: "Billing",
-          url: "/app/settings/billing",
-        },
-      ],
-    },
+    // {
+    //   title: "Settings",
+    //   isCollapsable: true,
+    //   isActive: true,
+    //   icon: Settings2,
+    //   items: [
+    //     {
+    //       title: "Profile",
+    //       url: "/app/settings/profile",
+    //     },
+    //     {
+    //       title: "Billing",
+    //       url: "/app/settings/billing",
+    //     },
+    //   ],
+    // },
   ],
 };
 

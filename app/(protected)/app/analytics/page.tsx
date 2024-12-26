@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function AppPostsPage() {
+export default function AnalyticsPage() {
   return <div>AppPostsPage</div>;
 }

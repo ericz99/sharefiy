@@ -13,7 +13,7 @@ export default function GithubButton({ signIn }: ProviderProps) {
       className="flex-1"
       action={async () => {
         await signIn("github", {
-          redirectTo: "/app/dashboard",
+          redirectTo: "/app/links",
         });
       }}
     >

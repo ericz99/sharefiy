@@ -14,7 +14,7 @@ export default function MagicLink({ signIn }: ProviderProps) {
       action={async () => {
         await signIn("resend", {
           email,
-          redirectTo: "/app/dashboard",
+          redirectTo: "/app/links",
         });
       }}
       className="flex flex-col gap-4"
