@@ -309,3 +309,15 @@ export async function getLinkAnalytics(link: string) {
 
   return analyticObject;
 }
+
+export const getAllSlug = async (userId: string) => {
+  return await prisma.link.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      slug: true,
+      originalUrl: true,
+    },
+  });
+};

@@ -1,10 +1,13 @@
 import React from "react";
 
 import { MousePointerClick, Radar } from "lucide-react";
-import { getLinkAnalytics } from "@/prisma/db/analytics";
+import { getLinkAnalytics, getAllSlug } from "@/prisma/db/analytics";
 import AnalyticsCard from "@/components/analytic/analytic-card";
 import AnalyticChart from "@/components/analytic/analytic-chart";
 import AnalyticMap from "@/components/analytic/analytic-map";
+import AnalyticHeader from "@/components/analytic/analytic-header";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function AnalyticPage({
   params,
@@ -15,6 +18,16 @@ export default async function AnalyticPage({
 }) {
   const { link } = await params;
 
+  const session = await auth();
+
+  if (!session || !session.user) {
+    redirect("/auth/login");
+  }
+
+  const { id } = session.user;
+
+  const slugs = await getAllSlug(id!);
+
   const { os, browsers, deviceTypes, referrers, geoAnalytics, ...analytic } =
     await getLinkAnalytics(link);
 
@@ -24,7 +37,10 @@ export default async function AnalyticPage({
 
   return (
     <div className="p-4 max-w-screen-xl container mx-auto w-full">
-      <h1 className="text-2xl font-bold mb-4">Analytic</h1>
+      <h1 className="text-2xl font-bold mb-8">Analytic</h1>
+
+      <AnalyticHeader currentSlug={link} allSlug={slugs} />
+
       <div className="grid gap-4 lg:grid-cols-2 mb-12">
         <AnalyticsCard
           title="Clicks"

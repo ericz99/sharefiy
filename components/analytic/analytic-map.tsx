@@ -28,7 +28,7 @@ export default function AnalyticMap({ geoAnalytics }: AnalyticMapProps) {
         <p className="font-bold text-gray-500">Map</p>
       </div>
 
-      <ComposableMap data-tip="" projectionConfig={{ scale: 150 }}>
+      <ComposableMap projectionConfig={{ scale: 165, center: [20, -10] }}>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
