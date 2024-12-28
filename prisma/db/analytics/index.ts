@@ -244,10 +244,10 @@ export async function getLinkAnalytics(link: string) {
   const analyticObject = {
     uniqueClicks: 0,
     clicks: 0,
-    os: [] as { os: string; count: number }[],
-    browsers: [] as { browser: string; count: number }[],
-    deviceTypes: [] as { deviceType: string; count: number }[],
-    referrers: [] as { referrer: string; count: number }[],
+    os: [] as { label: string; count: number }[],
+    browsers: [] as { label: string; count: number }[],
+    deviceTypes: [] as { label: string; count: number }[],
+    referrers: [] as { label: string; count: number }[],
     geoAnalytics: {
       countries: {} as Record<string, number>,
       regions: {} as Record<string, number>,
@@ -262,28 +262,28 @@ export async function getLinkAnalytics(link: string) {
 
   deviceTypes.forEach((device) =>
     analyticObject.deviceTypes.push({
-      deviceType: device.deviceType,
+      label: device.deviceType,
       count: device._count._all,
     })
   );
 
   osTypes.forEach((os) => {
     analyticObject.os.push({
-      os: os.os,
+      label: os.os,
       count: os._count._all,
     });
   });
 
   browserTypes.forEach((browser) => {
     analyticObject.browsers.push({
-      browser: browser.browser,
+      label: browser.browser,
       count: browser._count._all,
     });
   });
 
   referrers.forEach((referrer) =>
     analyticObject.referrers.push({
-      referrer: referrer.referrer,
+      label: referrer.referrer,
       count: referrer._count._all,
     })
   );

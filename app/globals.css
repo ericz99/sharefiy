@@ -193,3 +193,12 @@ body {
   background-color: #303030;
   opacity: 8%;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  pointer-events: none;
+}

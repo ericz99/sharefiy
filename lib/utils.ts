@@ -90,3 +90,48 @@ export const getSocialImages = (name: string) => {
       return null;
   }
 };
+
+export const getFaviconImage = (url: string) => {
+  return `https://www.google.com/s2/favicons?domain=${url}`;
+};
+
+export const shortenUrl = (url: string) => {
+  return url.replace(/(^\w+:|^)\/\//, "").split("/")[0];
+};
+
+export const shortenUrlLabel = (url: string) => {
+  const domain = url.replace(/(^\w+:|^)\/\//, "").split("/")[0];
+  return domain.split(".").slice(-2, -1)[0]; // Get the second to last part of the domain
+};
+
+const stripVersion = (name: string) => {
+  return name.split(" ")[0].toLowerCase();
+};
+
+export const getBrowserIcon = (browser: string) => {
+  const domainMap: { [key: string]: string } = {
+    chrome: "google.com",
+    firefox: "mozilla.org",
+    safari: "apple.com",
+    edge: "microsoft.com",
+    opera: "opera.com",
+  };
+
+  const strippedBrowser = stripVersion(browser);
+  const domain = domainMap[strippedBrowser] || "";
+  return domain ? getFaviconImage(domain) : "/question-mark.jpg";
+};
+
+export const getOsIcon = (os: string) => {
+  const domainMap: { [key: string]: string } = {
+    windows: "microsoft.com",
+    macos: "apple.com",
+    linux: "kernel.org",
+    android: "android.com",
+    ios: "apple.com",
+  };
+
+  const strippedOs = stripVersion(os);
+  const domain = domainMap[strippedOs] || "";
+  return domain ? getFaviconImage(domain) : "/question-mark.jpg";
+};
