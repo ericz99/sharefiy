@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma/prisma";
+import { Prisma } from "@prisma/client";
 
 export type DeviceInfo = {
   device: {
@@ -153,12 +154,12 @@ export const logTrackingInfo = async (info: TrackingInfo) => {
   });
 };
 
-export async function getLinkAnalytics(id: string) {
+export async function getLinkAnalytics(link: string) {
   const analytics = await prisma.linkAnalytic.groupBy({
     by: ["date"],
     where: {
       link: {
-        id,
+        slug: link,
       },
     },
     _sum: {
@@ -170,12 +171,12 @@ export async function getLinkAnalytics(id: string) {
     },
   });
 
-  const trackInfos = await prisma.trackInfo.groupBy({
-    by: ["createdAt"],
+  const osTypes = await prisma.trackInfo.groupBy({
+    by: ["os"],
     where: {
       linkAnalytic: {
         link: {
-          id,
+          slug: link,
         },
       },
     },
@@ -184,20 +185,127 @@ export async function getLinkAnalytics(id: string) {
     },
   });
 
-  return analytics.map((analytic) => ({
-    date: analytic.date,
-    uniqueClicks: analytic._sum.uniqueClicks,
-    clicks: analytic._sum.clicks,
-    totalEntries: analytic._count._all,
-    trackInfos: trackInfos
-      .filter(
-        (info) =>
-          info.createdAt.toISOString().slice(0, 10) ===
-          analytic.date.toISOString().slice(0, 10)
-      )
-      .map((info) => ({
-        date: info.createdAt,
-        count: info._count._all,
-      })),
-  }));
+  const browserTypes = await prisma.trackInfo.groupBy({
+    by: ["browser"],
+    where: {
+      linkAnalytic: {
+        link: {
+          slug: link,
+        },
+      },
+    },
+    _count: {
+      _all: true,
+    },
+  });
+
+  const deviceTypes = await prisma.trackInfo.groupBy({
+    by: ["deviceType"],
+    where: {
+      linkAnalytic: {
+        link: {
+          slug: link,
+        },
+      },
+    },
+    _count: {
+      _all: true,
+    },
+  });
+
+  const referrers = await prisma.trackInfo.groupBy({
+    by: ["referrer"],
+    where: {
+      linkAnalytic: {
+        link: {
+          slug: link,
+        },
+      },
+    },
+    _count: {
+      _all: true,
+    },
+  });
+
+  const geoData = await prisma.trackInfo.groupBy({
+    by: ["geo"],
+    where: {
+      linkAnalytic: {
+        link: {
+          slug: link,
+        },
+      },
+    },
+    _count: {
+      _all: true,
+    },
+  });
+
+  const analyticObject = {
+    uniqueClicks: 0,
+    clicks: 0,
+    os: [] as { os: string; count: number }[],
+    browsers: [] as { browser: string; count: number }[],
+    deviceTypes: [] as { deviceType: string; count: number }[],
+    referrers: [] as { referrer: string; count: number }[],
+    geoAnalytics: {
+      countries: {} as Record<string, number>,
+      regions: {} as Record<string, number>,
+      cities: {} as Record<string, number>,
+    },
+  };
+
+  analytics.forEach((analytic) => {
+    analyticObject.uniqueClicks += analytic._sum.uniqueClicks ?? 0;
+    analyticObject.clicks += analytic._sum.clicks ?? 0;
+  });
+
+  deviceTypes.forEach((device) =>
+    analyticObject.deviceTypes.push({
+      deviceType: device.deviceType,
+      count: device._count._all,
+    })
+  );
+
+  osTypes.forEach((os) => {
+    analyticObject.os.push({
+      os: os.os,
+      count: os._count._all,
+    });
+  });
+
+  browserTypes.forEach((browser) => {
+    analyticObject.browsers.push({
+      browser: browser.browser,
+      count: browser._count._all,
+    });
+  });
+
+  referrers.forEach((referrer) =>
+    analyticObject.referrers.push({
+      referrer: referrer.referrer,
+      count: referrer._count._all,
+    })
+  );
+
+  geoData.forEach((item) => {
+    const geo = item.geo as any;
+
+    if (geo.country) {
+      analyticObject.geoAnalytics.countries[geo.country] =
+        (analyticObject.geoAnalytics.countries[geo.country] || 0) +
+        item._count._all;
+    }
+    if (geo.region) {
+      analyticObject.geoAnalytics.regions[geo.region] =
+        (analyticObject.geoAnalytics.regions[geo.region] || 0) +
+        item._count._all;
+    }
+    if (geo.city) {
+      analyticObject.geoAnalytics.cities[geo.city] =
+        (analyticObject.geoAnalytics.cities[geo.city] || 0) + item._count._all;
+    }
+  });
+
+  return analyticObject;
 }

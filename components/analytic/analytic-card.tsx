@@ -24,7 +24,7 @@ export default function AnalyticsCard({
   const isPositiveChange = trend === "increase";
 
   return (
-    <Card className="w-full shadow-none border-zinc-100">
+    <Card className="w-full shadow-none border-zinc-200">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 border-none">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         {icon}

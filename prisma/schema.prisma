@@ -163,7 +163,7 @@ model Link {
 
 model LinkAnalytic {
   id           String      @id @default(cuid())
-  date         DateTime    @unique
+  date         String
   clicks       Int         @default(0)
   uniqueClicks Int         @default(0)
   trackInfos   TrackInfo[]
