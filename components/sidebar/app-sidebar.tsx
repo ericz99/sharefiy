@@ -21,49 +21,49 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Links",
-      url: "/app/links",
-      icon: Link,
-    },
-    {
-      title: "Analytics",
-      url: "/app/analytics",
-      icon: ChartArea,
-    },
-    // {
-    //   title: "Settings",
-    //   isCollapsable: true,
-    //   isActive: true,
-    //   icon: Settings2,
-    //   items: [
-    //     {
-    //       title: "Profile",
-    //       url: "/app/settings/profile",
-    //     },
-    //     {
-    //       title: "Billing",
-    //       url: "/app/settings/billing",
-    //     },
-    //   ],
-    // },
-  ],
-};
-
 export function AppSidebar({
   signOut,
   user,
+  allSlug,
 }: {
   signOut: SignOut;
   user: User;
+  allSlug: {
+    slug: string;
+    originalUrl: string;
+  }[];
 }) {
+  const memoData = React.useMemo(() => {
+    const data = {
+      user: {
+        name: "shadcn",
+        email: "m@example.com",
+        avatar: "/avatars/shadcn.jpg",
+      },
+      navMain: [
+        {
+          title: "Links",
+          url: "/app/links",
+          icon: Link,
+        },
+        {
+          title: "Analytics",
+          url: "/app/analytics",
+          icon: ChartArea,
+          isCollapsable: true,
+          isActive: true,
+          items: allSlug.map((slug) => ({
+            title: slug.slug,
+            url: `/app/analytics/${slug.slug}`,
+            iconUrl: slug.originalUrl,
+          })),
+        },
+      ],
+    };
+
+    return data;
+  }, [allSlug]);
+
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
@@ -75,7 +75,7 @@ export function AppSidebar({
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">ZeroToLaunch</span>
+                  <span className="truncate font-semibold">Sharefiy</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -83,7 +83,7 @@ export function AppSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={memoData.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} signOut={signOut} />

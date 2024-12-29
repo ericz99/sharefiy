@@ -35,12 +35,16 @@ export default function AnalyticHeader({
     <div className="flex gap-2 mb-10">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline" className="gap-2 capitalize">
+          <Button
+            size="sm"
+            variant="outline"
+            className="gap-2 capitalize font-semibold"
+          >
             {currentSlugData && (
               <img
                 src={getFaviconImage(currentSlugData.originalUrl)}
                 alt="favicon"
-                className="h-4 w-4 mr-2"
+                className="h-4 w-4"
               />
             )}
 
@@ -62,6 +66,25 @@ export default function AnalyticHeader({
               </Link>
             </DropdownMenuItem>
           ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            size="sm"
+            variant="outline"
+            className="gap-2 capitalize font-semibold"
+          >
+            All Time
+            <ChevronDown size={16} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>7 Day</DropdownMenuItem>
+          <DropdownMenuItem>1 Month</DropdownMenuItem>
+          <DropdownMenuItem>6 Month</DropdownMenuItem>
+          <DropdownMenuItem>1 Year</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

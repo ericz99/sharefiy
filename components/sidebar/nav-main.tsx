@@ -23,7 +23,7 @@ import {
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, getFaviconImage } from "@/lib/utils";
 
 export function NavMain({
   items,
@@ -38,6 +38,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      iconUrl?: string;
     }[];
   }[];
 }) {
@@ -114,6 +115,14 @@ export function NavMain({
                                 }`
                               )}
                             >
+                              {subItem.iconUrl && (
+                                <img
+                                  src={getFaviconImage(subItem.iconUrl)}
+                                  alt="favicon"
+                                  className="h-4 w-4"
+                                />
+                              )}
+
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>

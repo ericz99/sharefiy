@@ -25,7 +25,7 @@ export default function LinkListLayout({
   links,
 }: LinkListLayoutProps) {
   return (
-    <div className="h-full flex flex-1 flex-col relative border border-solid border-zinc-200 bg-zinc-100 rounded-md p-4 mt-6">
+    <div className="h-full flex flex-1 flex-col relative border border-solid border-zinc-200 bg-zinc-50 rounded-md p-4 mt-6">
       {links.length === 0 ? (
         <div className="h-full flex flex-col justify-center items-center gap-2">
           <Image

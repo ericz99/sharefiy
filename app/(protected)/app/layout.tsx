@@ -11,6 +11,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { getAllSlug } from "@/prisma/db/analytics";
 
 export default async function ProtectedLayout({
   children,
@@ -21,9 +22,13 @@ export default async function ProtectedLayout({
 
   if (!session || !session.user) redirect("/auth/login");
 
+  const { id } = session.user;
+
+  const slugs = await getAllSlug(id!);
+
   return (
     <SidebarProvider>
-      <AppSidebar user={session.user} signOut={signOut} />
+      <AppSidebar user={session.user} signOut={signOut} allSlug={slugs} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">

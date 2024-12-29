@@ -28,6 +28,8 @@ export type TrackingInfo = {
   ipAddress: string;
 };
 
+export type TimeFrame = "day" | "week" | "month" | "year";
+
 const getCurrentAnalytics = async (link?: string) => {
   const currentDate = new Date().toISOString().slice(0, 10);
 
