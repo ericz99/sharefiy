@@ -20,3 +20,18 @@ Ability to append UTM parameters to links easily.
 Real-Time Updates (Optional):
 
 Reflect clicks and sources instantly in the dashboard.
+
+--------
+
+Some say Bitly has the following cons:
+Limited free plan: The free plan only allows users to create up to 50 short links per month. 
+Paid plans are expensive: Paid plans start at $8 per month for 200 links, and go up to $199 per month for 3,000 links. 
+Analytics are deleted after 30 days: Analytics are only available for 30 days after being created. 
+Links can't be deleted: Once a link is created, it can't be deleted. 
+Destination URLs can't be changed: The destination URL of a link can't be changed. 
+Link data is public: Link data is public, and can be viewed by adding a + to the end of a Bitlink. 
+Case sensitive: Bitly's shortened links are case sensitive, which can cause issues when users type them in. 
+Hidden renewal clause: Bitly's purchase order contains a hidden clause that requires users to give 90-day notice to avoid automatic renewal. 
+Customer service: Some say Bitly's customer service is slow to respond and unhelpful. 
+Per-hour limits: There are per-hour limits for creating links through the Bitly API. The default limit is 10,000 links per hour for Enterprise accounts and 1,000 links per hour for other plans. 
+Brand identity: Some say that bit.ly/blabla doesn't honor brand identity, and that users need to opt for the pro plan to get their own domain with their brand name. 

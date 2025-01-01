@@ -27,7 +27,7 @@ export default async function LinksPage() {
   console.log("links", links);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col overflow-hidden p-2">
       <LinkController createOrUpdateLink={createOrUpdateTrackerLink} />
       <LinkListLayout
         createOrUpdateLink={createOrUpdateTrackerLink}

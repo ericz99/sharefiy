@@ -5,7 +5,7 @@ import * as React from "react";
 import { type SignOut } from "@/auth";
 import { type User } from "next-auth";
 
-import { Command, ChartArea, Link } from "lucide-react";
+import { Command, ChartArea, Link, Earth } from "lucide-react";
 
 import { NavMain } from "@/components/sidebar/nav-main";
 
@@ -45,6 +45,11 @@ export function AppSidebar({
           title: "Links",
           url: "/app/links",
           icon: Link,
+        },
+        {
+          title: "Domain",
+          url: "/app/domain",
+          icon: Earth,
         },
         {
           title: "Analytics",

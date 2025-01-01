@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
 
-import { Filter } from "lucide-react";
+import { useState } from "react";
+
+import { Filter, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import LinkCreationForm from "./link-creation-form";
@@ -17,17 +19,26 @@ interface LinkControllerProps {
 export default function LinkController({
   createOrUpdateLink,
 }: LinkControllerProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <div className="flex gap-4 relative justify-between">
-      <div className="flex w-full gap-2">
-        <div className="max-w-sm w-full">
-          <Input type="text" placeholder="Search by link" />
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search links..."
+            className="pl-9"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
-
-        <Button variant="outline" className="flex gap-4">
-          <Filter size={16} />
-          Filter
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="icon">
+            <Filter className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <LinkCreationForm createOrUpdateLink={createOrUpdateLink} />

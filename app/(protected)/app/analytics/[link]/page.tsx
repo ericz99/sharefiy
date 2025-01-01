@@ -36,7 +36,7 @@ export default async function AnalyticPage({
   console.log("geoAnalytics", geoAnalytics);
 
   return (
-    <div className="p-4 max-w-screen-xl container mx-auto w-full">
+    <div className="p-4 max-w-screen-2xl container mx-auto w-full">
       <h1 className="text-2xl font-bold mb-8">Analytic</h1>
 
       <AnalyticHeader currentSlug={link} allSlug={slugs} />

@@ -3,7 +3,7 @@ import LinkCreationForm from "./link-creation-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link as PrismaLink } from "@prisma/client";
-import { Edit, ChartColumn, View } from "lucide-react";
+import { Edit, ChartColumn, View, Link2 } from "lucide-react";
 
 import {
   Tooltip,
@@ -33,15 +33,26 @@ export default function LinkListItem({
       className="flex flex-col gap-2 border border-solid border-zinc-200 rounded-md p-4 shadow-sm bg-white"
     >
       <div className="flex justify-between items-center gap-2">
-        <div className="flex flex-col justify-between items-start">
-          {link.isActive ? (
-            <Badge variant="active">Active</Badge>
-          ) : (
-            <Badge variant="inactive">Inactive</Badge>
-          )}
+        <div className="flex flex-col justify-between items-start gap-2">
+          <div className="flex items-center gap-2">
+            <Link2 size={16} className="text-zinc-500a" />
 
-          <p className="text-lg font-semibold">{link.slug}</p>
-          <p className="text-sm text-zinc-700">{link.originalUrl}</p>
+            <p className="text-lg font-semibold">{link.slug}</p>
+
+            {link.isActive ? (
+              <Badge variant="active">Active</Badge>
+            ) : (
+              <Badge variant="inactive">Inactive</Badge>
+            )}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-zinc-500 truncate">{link.originalUrl}</p>
+            <div className="hidden sm:flex items-center gap-4 text-sm text-zinc-500">
+              {/* <span>0 clicks</span> */}
+              {/* <span>Last clicked 2 minutes ago</span> */}
+            </div>
+          </div>
         </div>
 
         <div className="flex gap-2">

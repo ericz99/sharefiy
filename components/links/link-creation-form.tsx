@@ -60,8 +60,6 @@ export default function LinkCreationForm({
   initialData,
   isEditMode = false,
 }: LinkCreationFormProps) {
-  console.log(initialData);
-
   const [toggle, setToggle] = useState(false);
 
   const form = useForm<FormSchema>({

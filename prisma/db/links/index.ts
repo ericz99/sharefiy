@@ -25,6 +25,9 @@ export const getAllUserLinks = async (userId: string) => {
     where: {
       userId,
     },
+    include: {
+      analytics: true,
+    },
   });
 };
 
