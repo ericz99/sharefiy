@@ -8,8 +8,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -66,25 +64,6 @@ export default function AnalyticHeader({
               </Link>
             </DropdownMenuItem>
           ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            size="sm"
-            variant="outline"
-            className="gap-2 capitalize font-semibold"
-          >
-            All Time
-            <ChevronDown size={16} />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>7 Day</DropdownMenuItem>
-          <DropdownMenuItem>1 Month</DropdownMenuItem>
-          <DropdownMenuItem>6 Month</DropdownMenuItem>
-          <DropdownMenuItem>1 Year</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

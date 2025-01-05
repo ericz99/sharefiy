@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { createLink, updateLink } from "@/prisma/db/links";
+import { createLink, updateLink, getLinkBySlug } from "@/prisma/db/links";
 import { revalidatePath } from "next/cache";
 
 export const createOrUpdateTrackerLink = async (data: {
@@ -19,6 +19,14 @@ export const createOrUpdateTrackerLink = async (data: {
 
   const { isEditMode, id, ...rest } = data;
 
+  const isSlugAvailable = await checkSlugAvailability(data.slug);
+
+  if (isSlugAvailable) {
+    return {
+      error: "Slug is already taken",
+    };
+  }
+
   if (!isEditMode && !id) {
     await createLink({
       ...rest,
@@ -33,4 +41,10 @@ export const createOrUpdateTrackerLink = async (data: {
   }
 
   revalidatePath("/app/links");
+};
+
+export const checkSlugAvailability = async (slug: string) => {
+  const link = await getLinkBySlug(slug);
+  if (link) return true;
+  return false;
 };

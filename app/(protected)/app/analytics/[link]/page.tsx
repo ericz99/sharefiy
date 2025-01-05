@@ -33,8 +33,6 @@ export default async function AnalyticPage({
 
   const mainAnalytics = { os, browsers, deviceTypes, referrers };
 
-  console.log("geoAnalytics", geoAnalytics);
-
   return (
     <div className="p-4 max-w-screen-2xl container mx-auto w-full">
       <h1 className="text-2xl font-bold mb-8">Analytic</h1>
@@ -46,15 +44,11 @@ export default async function AnalyticPage({
           title="Clicks"
           value={analytic.clicks}
           icon={<MousePointerClick className="h-6 w-6 text-muted-foreground" />}
-          percentageChange={5.67}
-          trendText="from last week"
         />
         <AnalyticsCard
           title="Unique Clicks"
           value={analytic.uniqueClicks}
           icon={<Radar className="h-6 w-6 text-muted-foreground" />}
-          percentageChange={-2.34}
-          trendText="from last week"
         />
       </div>
 

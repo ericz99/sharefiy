@@ -15,13 +15,23 @@ interface LinkListLayoutProps {
     originalUrl: string;
     slug: string;
     isActive?: boolean;
-  }) => Promise<void>;
+    isEditMode?: boolean;
+    id?: string;
+  }) => Promise<
+    | {
+        error: string;
+      }
+    | undefined
+  >;
+
+  checkSlugAvailability: (slug: string) => Promise<boolean>;
 
   links: Link[];
 }
 
 export default function LinkListLayout({
   createOrUpdateLink,
+  checkSlugAvailability,
   links,
 }: LinkListLayoutProps) {
   return (
@@ -43,12 +53,16 @@ export default function LinkListLayout({
             </p>
           </div>
 
-          <LinkCreationForm createOrUpdateLink={createOrUpdateLink} />
+          <LinkCreationForm
+            checkSlugAvailability={checkSlugAvailability}
+            createOrUpdateLink={createOrUpdateLink}
+          />
         </div>
       ) : (
         <div className="flex flex-col gap-4">
           {links.map((link: Link) => (
             <LinkListItem
+              checkSlugAvailability={checkSlugAvailability}
               key={link.id}
               link={link}
               createOrUpdateLink={createOrUpdateLink}

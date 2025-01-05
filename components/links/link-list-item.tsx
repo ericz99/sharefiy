@@ -20,12 +20,22 @@ interface LinkListItemProps {
     originalUrl: string;
     slug: string;
     isActive?: boolean;
-  }) => Promise<void>;
+    isEditMode?: boolean;
+    id?: string;
+  }) => Promise<
+    | {
+        error: string;
+      }
+    | undefined
+  >;
+
+  checkSlugAvailability: (slug: string) => Promise<boolean>;
 }
 
 export default function LinkListItem({
   link,
   createOrUpdateLink,
+  checkSlugAvailability,
 }: LinkListItemProps) {
   return (
     <div
@@ -89,6 +99,7 @@ export default function LinkListItem({
 
           <LinkCreationForm
             createOrUpdateLink={createOrUpdateLink}
+            checkSlugAvailability={checkSlugAvailability}
             initialData={link}
             isEditMode={true}
           >

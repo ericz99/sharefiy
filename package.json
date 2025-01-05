@@ -50,6 +50,7 @@
     "react-hook-form": "^7.54.0",
     "react-simple-maps": "^3.0.0",
     "react-tweet": "^3.2.1",
+    "react-use": "^17.6.0",
     "recharts": "^2.15.0",
     "sonner": "^1.7.1",
     "stripe": "^17.4.0",

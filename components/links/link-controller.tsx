@@ -13,11 +13,21 @@ interface LinkControllerProps {
     originalUrl: string;
     slug: string;
     isActive?: boolean;
-  }) => Promise<void>;
+    isEditMode?: boolean;
+    id?: string;
+  }) => Promise<
+    | {
+        error: string;
+      }
+    | undefined
+  >;
+
+  checkSlugAvailability: (slug: string) => Promise<boolean>;
 }
 
 export default function LinkController({
   createOrUpdateLink,
+  checkSlugAvailability,
 }: LinkControllerProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -41,7 +51,10 @@ export default function LinkController({
         </div>
       </div>
 
-      <LinkCreationForm createOrUpdateLink={createOrUpdateLink} />
+      <LinkCreationForm
+        checkSlugAvailability={checkSlugAvailability}
+        createOrUpdateLink={createOrUpdateLink}
+      />
     </div>
   );
 }

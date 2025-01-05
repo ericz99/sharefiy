@@ -46,11 +46,7 @@ export function AppSidebar({
           url: "/app/links",
           icon: Link,
         },
-        {
-          title: "Domain",
-          url: "/app/domain",
-          icon: Earth,
-        },
+
         {
           title: "Analytics",
           url: "/app/analytics",

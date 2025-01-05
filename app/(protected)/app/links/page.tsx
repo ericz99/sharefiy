@@ -7,7 +7,7 @@ import { getAllUserLinks } from "@/prisma/db/links";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
-import { createOrUpdateTrackerLink } from "./action";
+import { createOrUpdateTrackerLink, checkSlugAvailability } from "./action";
 
 export default async function LinksPage() {
   const session = await auth();
@@ -28,8 +28,12 @@ export default async function LinksPage() {
 
   return (
     <div className="h-full flex flex-col overflow-hidden p-2">
-      <LinkController createOrUpdateLink={createOrUpdateTrackerLink} />
+      <LinkController
+        checkSlugAvailability={checkSlugAvailability}
+        createOrUpdateLink={createOrUpdateTrackerLink}
+      />
       <LinkListLayout
+        checkSlugAvailability={checkSlugAvailability}
         createOrUpdateLink={createOrUpdateTrackerLink}
         links={links}
       />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +31,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Link } from "@prisma/client";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   slug: z.string(),
@@ -47,7 +48,14 @@ interface LinkCreationFormProps {
     isActive?: boolean;
     isEditMode?: boolean;
     id?: string;
-  }) => Promise<void>;
+  }) => Promise<
+    | {
+        error: string;
+      }
+    | undefined
+  >;
+
+  checkSlugAvailability: (slug: string) => Promise<boolean>;
 
   children?: React.ReactNode;
   initialData?: Link;
@@ -56,11 +64,13 @@ interface LinkCreationFormProps {
 
 export default function LinkCreationForm({
   createOrUpdateLink,
+  checkSlugAvailability,
   children,
   initialData,
   isEditMode = false,
 }: LinkCreationFormProps) {
   const [toggle, setToggle] = useState(false);
+  const [slugError, setSlugError] = useState<string | null>(null);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -72,14 +82,32 @@ export default function LinkCreationForm({
   });
 
   async function onSubmit(values: FormSchema) {
-    await createOrUpdateLink({
+    const res = await createOrUpdateLink({
       ...values,
       isEditMode,
       id: initialData?.id,
     });
 
-    setToggle(false);
+    if (res?.error) {
+      form.setError("slug", {
+        message: res.error,
+      });
+    } else {
+      setToggle(false);
+    }
   }
+
+  const handleSlugBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+    const slug = event.target.value;
+    if (slug) {
+      const isTaken = await checkSlugAvailability(slug);
+      if (isTaken) {
+        setSlugError("This slug is already taken.");
+      } else {
+        setSlugError(null);
+      }
+    }
+  };
 
   return (
     <Sheet onOpenChange={(isOpen) => setToggle(isOpen)} open={toggle}>
@@ -104,10 +132,15 @@ export default function LinkCreationForm({
                 <FormItem>
                   <FormLabel>Slug</FormLabel>
                   <FormControl>
-                    <Input placeholder="slug" {...field} />
+                    <Input
+                      placeholder="slug"
+                      {...field}
+                      onBlur={handleSlugBlur}
+                      className={cn(slugError && "border-red-500")}
+                    />
                   </FormControl>
 
-                  <FormMessage />
+                  {slugError && <FormMessage>{slugError}</FormMessage>}
                 </FormItem>
               )}
             />
@@ -121,7 +154,6 @@ export default function LinkCreationForm({
                   <FormControl>
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
